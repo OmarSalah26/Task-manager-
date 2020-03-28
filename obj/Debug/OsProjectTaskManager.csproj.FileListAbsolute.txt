@@ -1,0 +1,7 @@
+D:\Study\Faculty\3.2\Operating System\OsProjectTaskManager\bin\Debug\OsProjectTaskManager.exe.config
+D:\Study\Faculty\3.2\Operating System\OsProjectTaskManager\bin\Debug\OsProjectTaskManager.exe
+D:\Study\Faculty\3.2\Operating System\OsProjectTaskManager\bin\Debug\OsProjectTaskManager.pdb
+D:\Study\Faculty\3.2\Operating System\OsProjectTaskManager\obj\Debug\OsProjectTaskManager.csprojAssemblyReference.cache
+D:\Study\Faculty\3.2\Operating System\OsProjectTaskManager\obj\Debug\OsProjectTaskManager.csproj.CoreCompileInputs.cache
+D:\Study\Faculty\3.2\Operating System\OsProjectTaskManager\obj\Debug\OsProjectTaskManager.exe
+D:\Study\Faculty\3.2\Operating System\OsProjectTaskManager\obj\Debug\OsProjectTaskManager.pdb
