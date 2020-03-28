@@ -22,67 +22,65 @@ namespace os
             // to calc usage for Idel
             double cpu_usage_For_idel = 0;
 
-        // label to return up by go to 
-        ShowTheListAgain:
+                    // label to return up by go to 
+                    ShowTheListAgain:
 
 
-            // to get all running processes
-            Process[] process = Process.GetProcesses();
+                    // to get all running processes
+                    Process[] process = Process.GetProcesses();
 
-            Console.WriteLine("Count : {0}", process.Length);
-            int count = 1;
-            foreach (var item in process.OrderBy(e => e.ProcessName))
-            {
-                Console.Write(" Process Name   --> " + item.ProcessName + " -  process id : " + item.Id);
-
-                // to get process id 
-                int procID = item.Id;
-
-
-                // to get specific process by id 
-                if (procID != 0)
-                {
-                    try
+                Console.WriteLine("Count : {0}", process.Length);
+                    foreach (var item in process.OrderBy(e => e.ProcessName))
                     {
-                        Process p = Process.GetProcessById(procID);
+                        Console.Write(" Process Name   --> " + item.ProcessName + " -  process id : " + item.Id);
 
-                        Curtime = DateTime.Now;
+                        // to get process id 
+                        int procID = item.Id;
 
-                        // calc cpu usage
 
-                        double cupUsge = (p.TotalProcessorTime.TotalMilliseconds) /
-                                  Curtime.Subtract(p.StartTime).TotalMilliseconds / Convert.ToDouble(Environment.ProcessorCount);
-                        cpu_usage_For_idel += cupUsge;
-                        Console.WriteLine("  ---------> {0} Cpu : {1:0.0000000} %", p.ProcessName, cupUsge * 100);
+                        // to get specific process by id 
+                        if (procID != 0)
+                        {
+                            try
+                            {
+                                Process p = Process.GetProcessById(procID);
+                                Curtime = DateTime.Now;
+
+                                // calc cpu usage
+
+                                double cupUsge = (p.TotalProcessorTime.TotalMilliseconds) /
+                                          Curtime.Subtract(p.StartTime).TotalMilliseconds / Convert.ToDouble(Environment.ProcessorCount);
+                                cpu_usage_For_idel += cupUsge;
+                                Console.WriteLine("  ---------> {0} Cpu : {1:0.0000000} %", p.ProcessName, cupUsge * 100);
+
+                            }
+                            catch (Exception ex)
+                            {
+
+                                Console.WriteLine("the process not found");
+                            }
+
+
+
+
+                        }
+                        else
+                        {
+
+                            // to calc the cpu usage for adle process
+
+                            Process pp = Process.GetProcessById(procID);
+
+                            //Thread.Sleep(100);
+                            Console.WriteLine(" {0} Cpu : {1:0.0} %", pp.ProcessName, (100 - cpu_usage_For_idel * 100));
+
+
+                        }
+
+
+
 
                     }
-                    catch (Exception ex)
-                    {
-
-                        Console.WriteLine("the process not found");
-                    }
-
-
-
-
-                }
-                else
-                {
-
-                    // to calc the cpu usage for adle process
-
-                    Process pp = Process.GetProcessById(procID);
-
-                    //Thread.Sleep(100);
-                    Console.WriteLine(" {0} Cpu : {1:0.0} %", pp.ProcessName, (100 - cpu_usage_For_idel * 100));
-
-
-                }
-
-
-
-
-            }
             #endregion
 
 
@@ -107,10 +105,7 @@ namespace os
                 case 1:
                     // to list all process before kill
 
-                    foreach (var item2 in process.OrderBy(s => s.ProcessName))
-                    {
-                        Console.WriteLine("Process Name   --> " + item2.ProcessName + " -  process id : " + item2.Id);
-                    }
+                   
                     Console.WriteLine("enter process id to kill");
 
                     // to get that id for process to kill
@@ -120,11 +115,13 @@ namespace os
 
                     // to list all process after kill
 
-                    foreach (var item3 in Process.GetProcesses().OrderBy(s => s.ProcessName))
-                    {
-                        Console.WriteLine("Process Name   --> " + item3.ProcessName + " -  process id : " + item3.Id);
-                    }
-                    break;
+                    Console.WriteLine("The Process Is Kill");
+                    Console.WriteLine("Please Wait To Return....");
+
+                    Thread.Sleep(3000);
+
+                    goto ShowTheListAgain;
+                    
 
                 case 2:
                     foreach (var item4 in process.OrderBy(s => s.ProcessName))
@@ -209,7 +206,7 @@ namespace os
 
 
         }
-
+       
     }
 }
 
