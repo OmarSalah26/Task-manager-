@@ -10,22 +10,23 @@ namespace os
 {
     class Program
     {
-    public   static  double  cpu_usage_For_idel = 0;
+        public   static  double  cpu_usage_For_idel = 0;
         private static DateTime Curtime;
         static void ListOfProcesses()
         {
             #region CpuUsage
             // to calc usage for Idel
-          
 
-        // label to return up by go to 
+
+            // label to return up by go to 
 
 
             // to get all running processes
-
+            cpu_usage_For_idel = 0;
             Console.WriteLine("Count : {0}", Process.GetProcesses().Length);
             foreach (var item in Process.GetProcesses().OrderBy(e => e.ProcessName))
             {
+
                 Console.Write(" Process Name   --> " + item.ProcessName + " -  process id : " + item.Id);
 
                 // to get process id 
@@ -81,7 +82,7 @@ namespace os
                 Process pp = Process.GetProcessById(procID);
 
                 //Thread.Sleep(100);
-                Console.WriteLine(" {0}  processId : 0 Cpu Usage : {1:0.0} %", pp.ProcessName, (100 - cpu_usage_For_idel * 100));
+                Console.WriteLine(" Process Name   -->  {0}  processId : 0 Cpu Usage : {1:0.0} %", pp.ProcessName, (100 - cpu_usage_For_idel * 100));
 
 
             
@@ -163,6 +164,7 @@ namespace os
 
 
                             }
+
                         }
 
                     // to list all process after kill
