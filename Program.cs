@@ -27,10 +27,9 @@ namespace os
 
 
                     // to get all running processes
-                    Process[] process = Process.GetProcesses();
 
-                Console.WriteLine("Count : {0}", process.Length);
-                    foreach (var item in process.OrderBy(e => e.ProcessName))
+                Console.WriteLine("Count : {0}", Process.GetProcesses().Length);
+                    foreach (var item in Process.GetProcesses().OrderBy(e => e.ProcessName))
                     {
                         Console.Write(" Process Name   --> " + item.ProcessName + " -  process id : " + item.Id);
 
@@ -44,12 +43,14 @@ namespace os
                             try
                             {
                                 Process p = Process.GetProcessById(procID);
+                        // to give the current time
                                 Curtime = DateTime.Now;
 
                                 // calc cpu usage
 
                                 double cupUsge = (p.TotalProcessorTime.TotalMilliseconds) /
                                           Curtime.Subtract(p.StartTime).TotalMilliseconds / Convert.ToDouble(Environment.ProcessorCount);
+                        // i will use it to calc the total processor time for all processes
                                 cpu_usage_For_idel += cupUsge;
                                 Console.WriteLine("  ---------> {0} Cpu : {1:0.0000000} %", p.ProcessName, cupUsge * 100);
 
@@ -86,11 +87,15 @@ namespace os
 
 
             //#region Kill And Change pirority
-            Console.WriteLine("OPtions :");
+
+            Console.WriteLine("\n \n OPtions :");
             Console.WriteLine("if you need to kill process                    press =>> 1");
             Console.WriteLine("if you need to change prioirty of process      press =>> 2");
-            Console.WriteLine("if you need to Close or Exit From application  press =>> 3");
+            Console.WriteLine("if you need to test individual process         press =>> 3");
+
             Console.WriteLine("if you need to Show task manager Again         press =>> 4");
+            Console.WriteLine("if you need to Close or Exit From application  press =>> 5");
+
             //to choose any process to use
 
             int Choice_Kill_Prioirty = Convert.ToInt32(Console.ReadLine());
@@ -102,6 +107,7 @@ namespace os
             switch (Choice_Kill_Prioirty)
             {
 
+                //to kill process
                 case 1:
                     // to list all process before kill
 
@@ -118,16 +124,13 @@ namespace os
                     Console.WriteLine("The Process Is Kill");
                     Console.WriteLine("Please Wait To Return....");
 
-                    Thread.Sleep(3000);
+                    Thread.Sleep(2000);
 
                     goto ShowTheListAgain;
                     
-
+                    // to change pirority
                 case 2:
-                    foreach (var item4 in process.OrderBy(s => s.ProcessName))
-                    {
-                        Console.WriteLine("Process Name   --> " + item4.ProcessName + " -  process id : " + item4.Id);
-                    }
+                   
                     Console.WriteLine("enter process id to change priority");
                     processid = Convert.ToInt32(Console.ReadLine());
 
@@ -146,7 +149,7 @@ namespace os
 7=>> Leave as it");
                     int priorityChoice = Convert.ToInt32(Console.ReadLine());
 
-
+                    // pirority choices
                     switch (priorityChoice)
                     {
                         case 1:
@@ -185,12 +188,54 @@ namespace os
 
 
 
+                // for test individual process
                 case 3:
+                    Console.Write(" Please Enter the process Id ");
+                    int procID = Convert.ToInt32(Console.ReadLine());
+                    if (procID != 0)
+                    {
+                        try
+                        {
+                            while (!Console.KeyAvailable) { 
+                            Process p = Process.GetProcessById(procID);
+                            Curtime = DateTime.Now;
+
+                            // calc cpu usage
+
+                            double cupUsge = (p.TotalProcessorTime.TotalMilliseconds) /
+                                      Curtime.Subtract(p.StartTime).TotalMilliseconds / Convert.ToDouble(Environment.ProcessorCount);
+                            cpu_usage_For_idel += cupUsge;
+                            Console.WriteLine("  ---------> {0} Cpu : {1:0.0000000} %", p.ProcessName, cupUsge * 100);
+                                Console.WriteLine("please press any key to return ");
+                                while (Console.KeyAvailable)
+                                    goto ShowTheListAgain;
+                }
+                        }
+                        catch (Exception ex)
+                        {
+
+                            Console.WriteLine("the process not found");
+                        }
+
+
+
+
+                    }
+
+                    goto ShowTheListAgain;
+                // to show the list more than time
+
+                case 4:
+
+                    goto ShowTheListAgain;
+                // To close the console
+
+                case 5:
                     Environment.Exit(0);
                     break;
 
-                case 4:
-                    goto ShowTheListAgain;
+                // to show the list more than time
+
                 default:
                     goto ShowTheListAgain;
 
@@ -199,9 +244,7 @@ namespace os
             }
             #endregion
 
-            Thread.Sleep(3000);
-            // to show the list more than time
-            goto ShowTheListAgain;
+           
             #endregion
 
 
