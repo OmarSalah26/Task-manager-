@@ -97,7 +97,8 @@ namespace os
             Console.WriteLine("if you need to Close or Exit From application  press =>> 5");
 
             //to choose any process to use
-
+            again6:
+            try { 
             int Choice_Kill_Prioirty = Convert.ToInt32(Console.ReadLine());
 
             // to kill and change pirority of process
@@ -111,13 +112,43 @@ namespace os
                 case 1:
                     // to list all process before kill
 
-                   
+                    again3:
                     Console.WriteLine("enter process id to kill");
 
                     // to get that id for process to kill
 
-                    int processid = Convert.ToInt32(Console.ReadLine());
-                    Process.GetProcessById(processid).Kill();
+                   
+                    int processid = 0;
+                          
+                    try
+                    {
+                        processid = Convert.ToInt32(Console.ReadLine());
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("OOOH... Please enter number");
+                        goto again3;
+                    }
+
+                    try
+                    {
+                        Process.GetProcessById(processid).Kill();
+                    }
+                    catch (Exception ex) {
+                        Console.WriteLine("OOOH...  the process is not found");
+                            Console.WriteLine("Please -press 1 to enter process id again ");
+                            Console.WriteLine("       -press 2 to return to the task manager");
+                            int Choice = Convert.ToInt32(Console.ReadLine());
+                            switch (Choice)
+                            {
+                                case 1:
+                                    goto again3;
+                                default:
+                                    goto ShowTheListAgain;
+
+
+                            }
+                        }
 
                     // to list all process after kill
 
@@ -130,12 +161,40 @@ namespace os
                     
                     // to change pirority
                 case 2:
-                   
+                     again:
                     Console.WriteLine("enter process id to change priority");
-                    processid = Convert.ToInt32(Console.ReadLine());
+                    try
+                    {
+                        processid = Convert.ToInt32(Console.ReadLine());
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("OOOH... Please enter number ");
+                        goto again;
+                    }
 
-                    // this code for change priority for gthe current process by the ProcessPriorityClass  
-                    Console.WriteLine("THE CURRENT PRIORITY IS  :{0} \n", Process.GetProcessById(processid).PriorityClass);
+                        // this code for change priority for gthe current process by the ProcessPriorityClass  
+
+                        try
+                        {
+                            Console.WriteLine("THE CURRENT PRIORITY IS  :{0} \n", Process.GetProcessById(processid).PriorityClass);
+                        }
+                        catch(Exception ex)
+                        {
+                            Console.WriteLine("OOOH...  the process is not found");
+                            Console.WriteLine("Please -press 1 to enter process id again ");
+                            Console.WriteLine("       -press 2 to return to the task manager");
+                            int Choice = Convert.ToInt32(Console.ReadLine());
+                            switch (Choice)
+                            {
+                                case 1:
+                                    goto again;
+                                default:
+                                    goto ShowTheListAgain;
+
+
+                            }
+                        }
 
                     Console.WriteLine("Choosse the New priority ");
 
@@ -147,7 +206,18 @@ namespace os
 5=>> AboveNormal
 6=>> Idle
 7=>> Leave as it");
-                    int priorityChoice = Convert.ToInt32(Console.ReadLine());
+                    int priorityChoice = 0;
+
+                    again1:
+                    try
+                    {
+                        priorityChoice = Convert.ToInt32(Console.ReadLine());
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("OOOH... Please enter number");
+                        goto again1;
+                    }
 
                     // pirority choices
                     switch (priorityChoice)
@@ -190,8 +260,19 @@ namespace os
 
                 // for test individual process
                 case 3:
-                    Console.Write(" Please Enter the process Id ");
-                    int procID = Convert.ToInt32(Console.ReadLine());
+                    again8:
+                        again0:
+                        Console.Write(" Please Enter the process Id ");
+                        
+                    int procID = 0;
+                        try { procID = Convert.ToInt32(Console.ReadLine());
+
+
+                        } catch (Exception ex) {
+
+                            Console.WriteLine("OOOH... Please enter  number");
+                           goto again0;
+                        }
                     if (procID != 0)
                     {
                         try
@@ -214,13 +295,14 @@ namespace os
                         catch (Exception ex)
                         {
 
-                            Console.WriteLine("the process not found");
+                            Console.WriteLine(" OOOH... the process not found");
+                               goto again8;
+                            }
+
+
+
+
                         }
-
-
-
-
-                    }
 
                     goto ShowTheListAgain;
                 // to show the list more than time
@@ -242,9 +324,20 @@ namespace os
 
 
             }
-            #endregion
+                #endregion
 
-           
+            }
+            catch (Exception ex) { Console.WriteLine("OOOH... Please enter  number");
+                Console.WriteLine("\n \n OPtions :");
+                Console.WriteLine("if you need to kill process                    press =>> 1");
+                Console.WriteLine("if you need to change prioirty of process      press =>> 2");
+                Console.WriteLine("if you need to test individual process         press =>> 3");
+
+                Console.WriteLine("if you need to Show task manager Again         press =>> 4");
+                Console.WriteLine("if you need to Close or Exit From application  press =>> 5");
+                goto again6;
+
+            }
             #endregion
 
 
