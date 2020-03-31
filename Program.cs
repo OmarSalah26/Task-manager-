@@ -154,7 +154,11 @@ namespace os
                         Console.WriteLine("OOOH...  the process is not found");
                             Console.WriteLine("Please -press 1 to enter process id again ");
                             Console.WriteLine("       -press 2 to return to the task manager");
-                            int Choice = Convert.ToInt32(Console.ReadLine());
+                        again10:
+                            int Choice = 0;
+                            try { 
+                             Choice = Convert.ToInt32(Console.ReadLine());
+                           
                             switch (Choice)
                             {
                                 case 1:
@@ -164,7 +168,11 @@ namespace os
 
 
                             }
-
+                            }
+                            catch (Exception xx) {
+                                Console.WriteLine("OOOH... Please enter number");
+                                goto again10;
+                            }
                         }
 
                     // to list all process after kill
@@ -201,15 +209,26 @@ namespace os
                             Console.WriteLine("OOOH...  the process is not found");
                             Console.WriteLine("Please -press 1 to enter process id again ");
                             Console.WriteLine("       -press 2 to return to the task manager");
-                            int Choice = Convert.ToInt32(Console.ReadLine());
-                            switch (Choice)
+                        again11:
+                            int Choice = 0;
+                            try
                             {
-                                case 1:
-                                    goto again;
-                                default:
-                                    goto ShowTheListAgain;
+                                Choice = Convert.ToInt32(Console.ReadLine());
+
+                                switch (Choice)
+                                {
+                                    case 1:
+                                        goto again3;
+                                    default:
+                                        goto ShowTheListAgain;
 
 
+                                }
+                            }
+                            catch (Exception xx)
+                            {
+                                Console.WriteLine("OOOH... Please enter number");
+                                goto again11;
                             }
                         }
 
@@ -261,7 +280,7 @@ namespace os
                     }
 
 
-                    Console.WriteLine("The Priority Is  :{0} ", Process.GetProcessById(processid).PriorityClass);
+                    Console.WriteLine("The New Priority Is  :{0} ", Process.GetProcessById(processid).PriorityClass);
                     Console.WriteLine("Please Wait To Return....");
 
 
@@ -329,7 +348,7 @@ namespace os
                        {
                             ListOfProcesses();
 
-                            Console.WriteLine("Please press any key to return to task manager");
+                            Console.WriteLine("Please press any key to return to Menu");
                             Thread.Sleep(2000);
                         }
                         goto ShowTheListAgain;
